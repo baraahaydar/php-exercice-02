@@ -156,3 +156,7 @@ td, th {
 .new1 {
     padding-left: 110px;
 }
+
+.notes{
+    color: red;
+}

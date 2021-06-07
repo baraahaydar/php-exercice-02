@@ -13,7 +13,7 @@ class USER
     {
         try
         {
-            $stmt = $this->db->prepare("INSERT INTO users(username, email, password)
+            $stmt = $this->db->prepare("INSERT INTO Users(username, email, password)
                                                     VALUES(:username, :email, :password)");
             $stmt->bindparam(":username", $username);
             $stmt->bindparam(":email", $email);
@@ -29,7 +29,7 @@ class USER
     {
         try
         {
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE username=? AND password=? OR email=? AND password=?");
+            $stmt = $this->db->prepare("SELECT * FROM Users WHERE username=? AND password=? OR email=? AND password=?");
             $stmt->execute([$username, $password, $username, $password]);
             $isUser = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($isUser > 0) {

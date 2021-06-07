@@ -4,28 +4,24 @@ require_once 'Dbconfig.php';
 if (!$user->is_loggedin()) {
     $user->redirect('Login.php');
 }
-$userID = $_SESSION['user_session'];
-$stmt = $DB_con->prepare("SELECT * FROM Users WHERE userID=:userID");
-$stmt->execute(array(":userID" => $userID));
-$userRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (isset($_POST['btn-logout'])) {
-    if ($user->logout()) {
-        $user->redirect('Home.php');
-    }
-    ;
+if (isset($_POST['btn-done'])) {
+    $user->redirect('myBlogs.php');
 }
+
 ?>
 
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>welcome <?php print($userRow['email']);?></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link rel="stylesheet" href="./Blogs.css">
+
+    <title>Done Blog</title>
+
     <style>
     * {
         box-sizing: border-box;
@@ -38,6 +34,7 @@ if (isset($_POST['btn-logout'])) {
 
     .header {
         overflow: hidden;
+        );
         padding: 20px 10px;
     }
 
@@ -72,34 +69,43 @@ if (isset($_POST['btn-logout'])) {
         float: right;
         border-radius: 4px;
     }
+
+    .colorDone{
+    color: rgb(190, 0, 0);
+    font-size:300%;
+    font-weight: bold;
+}
+
+.containerrad{
+    border-radius:20px
+}
     </style>
-</head>
 
 </head>
 
 <body>
 
     <div class="header">
-        <a href="./Panel.php" class="logo active">BLOGS</a>
+        <a href="./Panel.php" class="logo">BLOGS</a>
         <div class="header-right">
             <a href="./allBlogs.php">All Blogs</a>
             <a href="./myBlogs.php">My Blogs</a>
-            <a href="./addBlogs.php">New Blog</a>
+            <a class="active" href="./addBlogs.php">New Blog</a>
         </div>
     </div>
 
-    <div class='panelHome'>
+    <form method="post">
+        <div class="container containerrad">
+            <div class="allin">
 
-    <p>
-        welcome : <?php print($userRow['username']);?>
-    </p>
-        <div>
-            <form method='post'>
-                <button type='submit' name="btn-logout">Logout</button>
-            </form>
+                <h1 class="colorDone">BLOG ADD SUCCESSFULLY</h1>
+
+                <button type="submit" name="btn-done" class="savebtn">
+                    Done
+                </button>
+            </div>
         </div>
-
-    </div>
+    </form>
 
 </body>
 

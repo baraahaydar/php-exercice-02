@@ -9,21 +9,33 @@ if (isset($_POST['btn-signup'])) {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
+    $confirmpass = trim($_POST['confirmpass']);
+
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number = preg_match('@[0-9]@', $password);
 
     if ($username == "") {
-        $error[] = "provide username !";
+        $error[] = "Provide username !";
     } else if ($email == "") {
-        $error[] = "provide email id !";
+        $error[] = "Provide email !";
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error[] = 'Please enter a valid email address !';
     } else if ($password == "") {
         $error[] = "provide password !";
-    } else if (strlen($password) < 1) {
-        $error[] = "Password must be atleast 6 characters";
+    } else if ($confirmpass == "") {
+        $error[] = "please confirm password !";
+    } else if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        $error[] = "Password should be at least 8 characters, <br />
+                    1 upper case letter, <br />
+                    1 lower case letter, <br />
+                    1 number.";
+    } else if ($password != $confirmpass) {
+        $error[] = "Confirm is not correct";
     } else {
         try
         {
-            $stmt = $DB_con->prepare("SELECT username, email FROM users WHERE username=:username OR email=:email");
+            $stmt = $DB_con->prepare("SELECT username, email FROM Users WHERE username=:username OR email=:email");
             $stmt->execute(array(':username' => $username, ':email' => $email));
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -66,11 +78,10 @@ if (isset($_POST['btn-signup'])) {
                             <h1>CREATE ACCOUNT.</h1>
                             <p>Please fill your information.</p>
                             <hr />
-
                             <?php if (isset($error)) {foreach ($error as $error) {?>
 
-                            <div>
-                                <p> <?php echo $error; ?> </p>
+                            <div class='notes' >
+                                <p class='notes'> <?php echo $error; ?> </p>
                             </div>
 
                             <?php }} else if (isset($_GET['joined'])) {?>
@@ -81,24 +92,23 @@ if (isset($_POST['btn-signup'])) {
 
                             <?php }?>
 
-
                             <div>
 
                                 <label for="user"><b>Username</b></label>
                                 <input type="text" placeholder="Enter Username" name="username" id="user"
-                                    value="<?php if (isset($error)) {echo $username;}?>" required />
+                                    value="<?php if (isset($error)) {echo $username;}?>" />
 
                                 <label for="email"><b>Email</b></label>
                                 <input type="email" placeholder="Enter Your Email" name="email" id="email"
-                                    value="<?php if (isset($error)) {echo $email;}?>" required />
+                                    value="<?php if (isset($error)) {echo $email;}?>" />
 
                                 <label for="pass"><b>Password</b></label>
                                 <input type="password" placeholder="Enter Password" name="password" id="pass"
-                                    required />
+                                    />
 
                                 <label for="confirmpass"><b>Confirm Password</b></label>
                                 <input type="password" placeholder="Confirm Password" name="confirmpass"
-                                    id="confirmpass" required />
+                                    id="confirmpass"/>
 
                             </div>
                             <hr />

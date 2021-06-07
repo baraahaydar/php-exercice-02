@@ -11,7 +11,7 @@
 
 <body>
     <div class="homebtns">
-        <h1 class="welcomepg">WELCOME TO OUR WEBSITE</h1>
+        <h1>WELCOME TO OUR WEBSITE</h1>
         <div class="divHomebtns">
             <a href="Login.php" class="divbutton">Login</a>
             <a href="SignUp.php" class="divbutton">Register</a>

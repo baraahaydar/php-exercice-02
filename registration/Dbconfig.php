@@ -3,8 +3,8 @@
 session_start();
 
 $DB_host = "localhost";
-$DB_user = "root1";
-$DB_pass = "12345678";
+$DB_user = "root";
+$DB_pass = "";
 $DB_name = "php-ex2";
 
 try
